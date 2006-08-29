@@ -1,0 +1,32 @@
+%\VignetteIndexEntry{Visualization of screens}
+%\VignetteDepends{}
+%\VignetteKeywords{visualization}
+%\VignettePackage{splots}
+
+\documentclass[a4paper]{article}
+\usepackage[round]{natbib}
+
+%\usepackage[baseurl={http://www.ebi.ac.uk/~osklyar/projects/},pdftitle={Visualization of screens},pdfauthor={Oleg Sklyar},pdfsubject={visualization},pdfkeywords={visualization,screen,high throughput},pagebackref,bookmarks,colorlinks,linkcolor=darkblue,citecolor=darkblue,pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
+
+\bibliographystyle{abbrvnat}
+\begin{document}
+
+\newcommand{\lib}[1]{{\mbox{\normalfont\textsf{#1}}}}
+\newcommand{\Rfunction}[1]{{\mbox{\normalfont\texttt{#1}}}}
+\newcommand{\Robject}[1]{{\mbox{\normalfont\texttt{#1}}}}
+\newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
+\newcommand{\Rclass}[1]{{\mbox{\normalfont\textit{#1}}}}
+
+\title{visualization of high throughput screens}
+\author{Oleg Sklyar}
+
+\maketitle
+
+\lib{splots} is a small utility package, which aims to be a collection of visualization routines for high throughput screens. The emphasis is on having a
+package with a \emph{minimum} of dependencies to ensure interoperability and stability.
+
+The package was started as a spin-off from \lib{cellHTS} of the \lib{Bioconductor} with the function \Rfunction{plotScreen}, which was newly implemented using \lib{grid} graphics and made more general than the one built in the \lib{cellHTS}.
+
+Currently, \Rfunction{plotScreen} is the only function implemented, but the author will continue to add functionality as opportunity arises. Check \verb|?plot.screen| in \lib{R} for help of \Rfunction{plot.screen}.
+
+\end{document}
