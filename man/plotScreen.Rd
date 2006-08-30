@@ -41,8 +41,7 @@
 }
 
 \references{
-    The idea of the function goes to Ligia Bras, the author of the 'cellHTS' package of Bioconductor.
-    The current implementation is independent, faster, and is more general.
+    The initial idea of the function goes to Ligia Bras, the author of the 'cellHTS' package of Bioconductor.
 }
 
 \author{

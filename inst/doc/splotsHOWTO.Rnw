@@ -25,7 +25,7 @@
 \lib{splots} is a small utility package, which aims to be a collection of visualization routines for high throughput screens. The emphasis is on having a
 package with a \emph{minimum} of dependencies to ensure interoperability and stability.
 
-The package was started as a spin-off from \lib{cellHTS} of the \lib{Bioconductor} with the function \Rfunction{plotScreen}, which was newly implemented using \lib{grid} graphics and made more general than the one built in the \lib{cellHTS}.
+The package was started as a spin-off from \lib{cellHTS} of the \lib{Bioconductor} with the function \Rfunction{plotScreen}, which was newly implemented using \lib{grid} graphics and made more general.
 
 Currently, \Rfunction{plotScreen} is the only function implemented, but the author will continue to add functionality as opportunity arises. Check \verb|?plot.screen| in \lib{R} for help of \Rfunction{plot.screen}.
 
