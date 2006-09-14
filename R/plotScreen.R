@@ -77,7 +77,7 @@ plotScreen <- function(z, ncol = 6, dataSlot = NA, zrange = range(z, na.rm=TRUE)
                 else
                     pushViewport(viewport(x = (i - 0.5) * dx , y = 1 - (j - 0.5) * dy, width = 0.95 * dx, height = 0.95 * dy))
                 grid.rect(x, 1 - y, w, h, gp = gpar(col = col, fill = col))
-                grid.rect(0.5, 0.5, 1, 1, gp = gpar(col = abris))
+                grid.rect(0.5, 0.5, 1, 1, gp = gpar(col = abris, fill = "transparent"))
                 popViewport()
                 if (do.names) {
                     pushViewport(viewport(x = (i - 0.5) * dx, y = 1 - (j - 0.1) * dy, width = 0.95 * dx, height = 0.2 * dy))
