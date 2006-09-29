@@ -21,7 +21,7 @@
 
 \maketitle
 
-\lib{splots} is a small utility package with visualization routines
+\Rpackage{splots} is a small utility package with visualization routines
 for high throughput screens. It started as a spin-off from
 the \Rpackage{cellHTS} package, with the function
 \Rfunction{plotScreen}.
