@@ -11,22 +11,23 @@
 \bibliographystyle{abbrvnat}
 \begin{document}
 
-\newcommand{\lib}[1]{{\mbox{\normalfont\textsf{#1}}}}
 \newcommand{\Rfunction}[1]{{\mbox{\normalfont\texttt{#1}}}}
 \newcommand{\Robject}[1]{{\mbox{\normalfont\texttt{#1}}}}
 \newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
 \newcommand{\Rclass}[1]{{\mbox{\normalfont\textit{#1}}}}
 
-\title{visualization of high throughput screens}
+\title{Visualization for high throughput screening data}
 \author{Oleg Sklyar}
 
 \maketitle
 
-\lib{splots} is a small utility package, which aims to be a collection of visualization routines for high throughput screens. The emphasis is on having a
-package with a \emph{minimum} of dependencies to ensure interoperability and stability.
+\lib{splots} is a small utility package with visualization routines
+for high throughput screens. It started as a spin-off from
+the \Rpackage{cellHTS} package, with the function
+\Rfunction{plotScreen}.
 
-The package was started as a spin-off from \lib{cellHTS} of the \lib{Bioconductor} with the function \Rfunction{plotScreen}, which was newly implemented using \lib{grid} graphics and made more general.
+\section{The \Rfunction{plotScreen} function}
 
-Currently, \Rfunction{plotScreen} is the only function implemented, but the author will continue to add functionality as opportunity arises. Check \verb|?plot.screen| in \lib{R} for help of \Rfunction{plot.screen}.
+Short code example with made up data to produce a plot.
 
 \end{document}
