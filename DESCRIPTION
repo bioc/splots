@@ -8,4 +8,3 @@ Depends: R (>= 2.3.0), grid
 Description: A stand alone collection of generic plot and visualization routines for high throuput screens and similar data of general formats. The emphasis is on having as few dependencies as possible to ensure interoperability! At the moment there is only one function, but functionality will be added as opportunity arises.
 License: LGPL
 SaveImage: yes
-Packaged: Tue Aug 29 14:02:05 2006; osklyar
