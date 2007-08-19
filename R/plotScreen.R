@@ -75,7 +75,8 @@ plotScreen <- function(z,
         if (index <= length(z)) {
           zval = (z[[index]] - zrange[1]) / diff(zrange)
           mcol = colRamp(zval) / 256
-          col = do.call("rgb", lapply(seq_len(ncol(mcol)), function(j) mcol[,j]))
+          mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
+          col = do.call("rgb", lapply(1:3, function(j) mcol[,j]))
           col[is.na(zval)] = na.fill
           
           if (do.names)
