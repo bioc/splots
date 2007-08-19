@@ -61,7 +61,7 @@ plotScreen(z,
 }
 
 \author{
-    Oleg Sklyar\email{osklyar@ebi.ac.uk}   
+    Oleg Sklyar \email{osklyar@ebi.ac.uk}   
 }
 
 \examples{
