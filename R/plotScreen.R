@@ -42,6 +42,7 @@ plotScreen <- function(z,
       zrange = sort(zrange)
       if((length(zrange)!=2) || (!all(is.finite(zrange))) || (zrange[1]>=zrange[2]))
         stop("'zrange' must be of length 2 with finite values.")
+      z = lapply(z, function(v) { v[v<zrange[1]]=zrange[1]; v[v>zrange[2]]=zrange[2]; return(v) })
     } else {
       zrange = range(unlist(z), na.rm=TRUE)
     }
