@@ -53,8 +53,8 @@ plotScreen <- function(z,
     if(is.null(names(z)))
       names(z) = paste(seq(along=z))
 
-    dx <- 1.0 / ncol
-    dy <- 1.0 / if (do.legend) (nrow + 1.0) else nrow
+    dx <- if (do.legend) 0.9/ncol else 1.0/ncol
+    dy <- 1.0 / nrow
     
     w <- 1.0 / nx
     h <- 1.0 / ny
@@ -98,8 +98,25 @@ plotScreen <- function(z,
       }
     }
 
-    if(do.legend)
-      warning("do.legend is not yet implemented.")
+    if(do.legend) {
+      pushViewport(viewport(x=0.95, y=0.5, width=0.09, height=0.6))
+      zval = (0:50)/50
+      mcol = colRamp(zval) / 256
+      mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
+      col = do.call("rgb", lapply(1:3, function(j) mcol[,j]))
+      col[is.na(zval)] = na.fill
+      # plot legend box
+      grid.rect(0.2, zval/1.5+0.2, 0.3, 0.02/1.5, gp=gpar(col=col, fill=col))
+      # print legend text: find labels
+      ys = pretty(zval*diff(zrange)+min(zrange),8)
+      ys = ys[ys>=zrange[1] & ys<=zrange[2]]
+      zval = (ys-min(zrange))/diff(zrange)
+      grid.rect(0.37, 0.5/1.5+0.2, 1e-3, 1/1.5, gp=gpar(fill="black"))
+      grid.rect(0.39, zval/1.5+0.2, 0.03, 1e-3, gp=gpar(fill="black"))
+      grid.text(as.character(ys), 0.44, zval/1.5+0.2, gp = gpar(cex=0.7,fill="black"),
+        just="left")
+      popViewport()
+    }
     
     if(main!=""){
       popViewport()

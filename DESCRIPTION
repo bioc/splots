@@ -1,5 +1,6 @@
 Package: splots
-Version: 1.5.0
+Version: 1.5.1
+Date: 12 Dec 2007
 Title: Visualization routines for high throughput screens
 Author: Oleg Sklyar <osklyar@ebi.ac.uk>
 Maintainer: Oleg Sklyar <osklyar@ebi.ac.uk>
