@@ -41,8 +41,7 @@ plotScreen(z,
   \item{main}{Character of length 1, the plot title.}
   \item{do.names}{Logical specifiying if plate captions should be plotted.}
   \item{do.legend}{Logical specifying if a legend for false color
-    values should be output. This is currently not implemented.}
-  
+    values should be output.}
   \item{nx}{An integer for the number of columns in a plate. Default 24 for a 384-well plate.}
   \item{ny}{An integer for the number of rows in a plate. Default 16 for a 384-well plate.}
   \item{fill}{A character vector of colors to create a color ramp for the false color data
@@ -57,7 +56,7 @@ plotScreen(z,
 }
 
 \references{
-    The initial idea of the function goes to Ligia Bras, the author of the 'cellHTS' package.
+    The idea for this function is from Ligia Bras.
 }
 
 \author{
