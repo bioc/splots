@@ -39,8 +39,8 @@ plotScreen(z,
   \item{zrange}{The numeric range that is mapped to the color scale. If missing,
     the range of the data in \code{z} is used.}
   \item{main}{Character of length 1, the plot title.}
-  \item{do.names}{A boolean flag specifiying if plate captions should be plotted.}
-  \item{do.legend}{A boolean flag specifying if a legend for false color
+  \item{do.names}{Logical specifiying if plate captions should be plotted.}
+  \item{do.legend}{Logical specifying if a legend for false color
     values should be output. This is currently not implemented.}
   
   \item{nx}{An integer for the number of columns in a plate. Default 24 for a 384-well plate.}
