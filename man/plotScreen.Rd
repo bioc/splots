@@ -64,8 +64,8 @@ plotScreen(z,
 }
 
 \examples{
-  data("splots.screen")
-  plotScreen(screen, ncol=3, main="splots example")
+  screen = lapply(1:12, function(i) runif(352))
+  plotScreen(screen, ncol=3)
 }
 
 \keyword{dplot}
