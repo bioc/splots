@@ -1,9 +1,9 @@
 Package: splots
 Version: 1.7.1
-Title: Visualization routines for high throughput screens
+Title: Visualization of high-throughput assays in microtitre plate or chamber slide format
 Author: Oleg Sklyar <osklyar@ebi.ac.uk>
 Maintainer: Oleg Sklyar <osklyar@ebi.ac.uk>
-Depends: R (>= 2.3.0), grid
-Description: A stand alone collection of generic plot and visualization routines for high throuput screens and similar data of general formats. The emphasis is on having as few dependencies as possible to ensure interoperability! At the moment there is only one function, but functionality will be added as opportunity arises.
+Depends: grid
+Description: The splots package provides the plotScreen function for the visualization of for high-throughput assays in microtitre plate or chamber slide format. 
 License: LGPL
 LazyLoad: yes
