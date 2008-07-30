@@ -1,12 +1,10 @@
-%\VignetteIndexEntry{Visualization of screens}
+%\VignetteIndexEntry{Visualization of high-throughput assays in microtitre plate or chamber slide format}
 %\VignetteDepends{}
 %\VignetteKeywords{visualization}
 %\VignettePackage{splots}
 
 \documentclass[a4paper]{article}
 \usepackage[round]{natbib}
-
-%\usepackage[baseurl={http://www.ebi.ac.uk/~osklyar/projects/},pdftitle={Visualization of screens},pdfauthor={Oleg Sklyar},pdfsubject={visualization},pdfkeywords={visualization,screen,high throughput},pagebackref,bookmarks,colorlinks,linkcolor=darkblue,citecolor=darkblue,pagecolor=darkblue,raiselinks,plainpages,pdftex]{hyperref}
 
 \bibliographystyle{abbrvnat}
 \begin{document}
@@ -22,12 +20,12 @@
 \maketitle
 
 \Rpackage{splots} is a small utility package with visualization routines
-for high throughput screens. It started as a spin-off from
-the \Rpackage{cellHTS} package, with the function
-\Rfunction{plotScreen}.
+for high-throughput assays in microtitre plate or chamber slide format. 
 
 \section{The \Rfunction{plotScreen} function}
 
-Short code example with made up data to produce a plot.
+Oleg intends to put here a short code example with example data to produce a plot.
+
+
 
 \end{document}
