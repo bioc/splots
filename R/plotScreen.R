@@ -77,7 +77,7 @@ plotScreen <- function(z,
           zval = (z[[index]] - zrange[1]) / diff(zrange)
           mcol = colRamp(zval) / 256
           mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
-          col = do.call("rgb", lapply(1:3, function(j) mcol[,j]))
+          col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
           col[is.na(zval)] = na.fill
           
           if (do.names)
@@ -103,7 +103,7 @@ plotScreen <- function(z,
       zval = (0:50)/50
       mcol = colRamp(zval) / 256
       mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
-      col = do.call("rgb", lapply(1:3, function(j) mcol[,j]))
+      col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
       col[is.na(zval)] = na.fill
       # plot legend box
       grid.rect(0.2, zval/1.5+0.2, 0.3, 0.02/1.5, gp=gpar(col=col, fill=col))
