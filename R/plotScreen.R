@@ -18,7 +18,8 @@ plotScreen <- function(z,
         stop("'z' must have length >= 1.")
     
     if(length(fill) < 2L)
-      stop("'fill' must have length >=2 since it is used to compute the color ramp that represent the values in z.")
+      stop("'fill' must have length >=2 since it is used to compute the color ",
+           "ramp that represent the values in z.")
 
     if (!((length(ncol)==1L)&&(ncol>0L)&&!is.na(ncol)))
       stop("'ncol' must be a positive integer of length 1.")
@@ -91,7 +92,7 @@ plotScreen <- function(z,
 
           if (do.names) {
             pushViewport(viewport(x = (i - 0.5) * dx, y = 1 - (j - 0.1) * dy, width = 0.95 * dx, height = 0.2 * dy))
-            grid.text(names(z)[[index]], gp = gpar(cex = 0.6))
+            grid.text(names(z)[[index]], gp = gpar(cex = 1))
             popViewport()
           }
         }
