@@ -19,6 +19,7 @@ plotScreen(z,
            main = "",
            do.names = TRUE,
            do.legend = FALSE,
+           legend.mapping = seq(from=zrange[1], to=zrange[2]),
            nx = 24L,
            ny = 16L,
            fill = c("blue", "white", "red"), 
@@ -42,6 +43,8 @@ plotScreen(z,
   \item{do.names}{Logical specifiying if plate captions should be plotted.}
   \item{do.legend}{Logical specifying if a legend for false color
     values should be output.}
+   \item{legend.mapping}{A character vector of mappings from the integer
+     numbers in \code{z} to descriptive names in the legend.}
   \item{nx}{An integer for the number of columns in a plate. Default 24 for a 384-well plate.}
   \item{ny}{An integer for the number of rows in a plate. Default 16 for a 384-well plate.}
   \item{fill}{A character vector of colors to create a color ramp for the false color data
