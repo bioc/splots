@@ -5,7 +5,7 @@ plotScreen <- function(z,
                        main = "",
                        do.names = TRUE,
                        do.legend = FALSE,
-                       legend.mapping = seq(from=zrange[1], to=zrange[2]),
+                       legend.mapping = round(seq(from=zrange[1], to=zrange[2]), 2),
                        nx = 24L,
                        ny = 16L,
                        fill = c("blue", "white", "red"), 
@@ -64,7 +64,8 @@ plotScreen <- function(z,
     x <- rep(x, ny)
     y <- (1:ny) / ny - h / 2
     y <- rep(y, each=nx)
-
+    grid.newpage()
+    
     pushViewport(viewport(width=1, height=0.92))
     if(main!=""){
       grid.text(main, x=0.5, y=1, hjust=0.5, vjust=pi/2)
@@ -116,8 +117,8 @@ plotScreen <- function(z,
       zval = (ys-min(zrange))/diff(zrange)
       grid.rect(0.37, 0.5/1.5+0.2, 1e-3, 1/1.5, gp=gpar(fill="black"))
       grid.rect(0.39, zval/1.5+0.2, 0.03, 1e-3, gp=gpar(fill="black"))
-      grid.text(legend.mapping[as.integer(ys)], 0.44,
-                zval/1.5+0.2, gp = gpar(cex=0.7,fill="black"),
+      grid.text(legend.mapping, 0.44,
+                zval/1.5+0.2, gp = gpar(cex=1, fill="black"),
                 just="left")
       popViewport()
     }
