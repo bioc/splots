@@ -30,7 +30,8 @@ plotScreen(z,
   \item{z}{A list of plate data. Each element provides data for a
     single plate and is expected to be a vector of length at least \code{nx*ny},
     (only the first \code{nx*ny} elements will be displayed).
-    The values are assumed to come in row-by-row order.}
+    The values are assumed to come in row-by-row order,
+    e.g. A1, A2, A3, ..., B1, B2, ...}
   \item{ncol}{Integer of length 1. Number of columns (plates in one row) for the plot.}
   \item{zrange}{The numeric range that is mapped to the color scale.
     If missing, a symmetric interval around the median of \code{z} is used.}

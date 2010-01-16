@@ -1,4 +1,4 @@
-plotScreen <- function(z,
+plotScreen = function(z,
                        ncol = 6L,
                        zrange,
                        main = "",
@@ -44,8 +44,7 @@ plotScreen <- function(z,
     } else {
       values = unlist(z)
       med = median(values, na.rm=TRUE)
-      zrange = med+c(-1,1) * max( max(values, na.rm=TRUE)-med,
-                                  med-min(values, na.rm=TRUE) )
+      zrange = med + c(-1, +1) * max(abs(values-med), na.rm=TRUE)
     }
     
     colRamp = colorRamp(fill)
@@ -89,7 +88,7 @@ plotScreen <- function(z,
           xscale = c(0, barWidth+textWidth),                      
           yscale = ys[c(1, length(ys))] ))
 
-      grid.raster(matrix(col, ncol=1, nrow=length(col)),
+      grid.raster(matrix(rev(col), ncol=1, nrow=length(col)),
                   interpolate = FALSE,
                   x = 2, width = barWidth-2, 
                   y = zrange[1], height=diff(zrange),
@@ -128,7 +127,7 @@ plotScreen <- function(z,
           col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
           col[is.na(zval)] = na.fill
     
-          grid.raster(matrix(col, nrow=nx, ncol=ny, byrow=TRUE),
+          grid.raster(matrix(col, nrow=ny, ncol=nx, byrow=TRUE),
                       x=i, y=nrow-j+1, width=0.95, height=plateHeight,
                       interpolate=FALSE, default.units="native",
                       just=c("right", "top"))
