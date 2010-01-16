@@ -1,12 +1,14 @@
-%\VignetteIndexEntry{Visualization of high-throughput assays in microtitre plate or chamber slide format}
+%\VignetteIndexEntry{Visualization of data from assays in microtitre plate or slide format}
 %\VignetteDepends{}
 %\VignetteKeywords{visualization}
 %\VignettePackage{splots}
 
 \documentclass[a4paper]{article}
-\usepackage[round]{natbib}
+\usepackage{a4wide}
 
-\bibliographystyle{abbrvnat}
+\SweaveOpts{keep.source=TRUE,eps=FALSE}
+\parindent0cm
+
 \begin{document}
 
 \newcommand{\Rfunction}[1]{{\mbox{\normalfont\texttt{#1}}}}
@@ -14,15 +16,53 @@
 \newcommand{\Rpackage}[1]{{\mbox{\normalfont\textsf{#1}}}}
 \newcommand{\Rclass}[1]{{\mbox{\normalfont\textit{#1}}}}
 
-\title{Visualization for high throughput screening data}
-\author{Oleg Sklyar}
+\title{Visualization of data from assays in microtitre plate or slide format}
+\author{Wolfgang Huber}
 
 \maketitle
 
-The \Rpackage{splots} package provides the \Rfunction{plotScreen}
-function for the visualization of for high-throughput assays in
-microtitre plate or chamber slide format.
+The \Rpackage{splots} package provides a single function, \Rfunction{plotScreen},
+for visualising data in microtitre plate or slide format. Here we show a short demo 
+of its parameters. First, we generate example data:
+%
+<<exampledata, results=hide>>= 
+library("splots")
+screen = lapply(1:12, function(i) cumsum(rnorm(384)))
+names(screen) = paste("plate", LETTERS[seq(along=screen)])
+@ 
 
-Oleg intends to put here a short code example with example data to produce a plot.
+\begin{figure}[ht]
+\begin{center}
+<<fig=TRUE, width=6, height=8>>=
+plotScreen(screen, ncol=3)
+@ 
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+<<fig=TRUE, width=6, height=8>>=
+plotScreen(screen, ncol=2, do.legend=FALSE)
+@ 
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+<<fig=TRUE, width=6, height=8>>=
+plotScreen(screen, ncol=4, fill=c("white", "darkblue"), main="Example data")
+@ 
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+<<fig=TRUE, width=6, height=8>>=
+for(i in seq(along=screen))
+  screen[[i]][sample(384, 5)] = NA
+plotScreen(screen, ncol=4, do.names=FALSE, main="Example data")
+@ 
+\end{center}
+\end{figure}
 
 \end{document}

@@ -1,16 +1,15 @@
 plotScreen <- function(z,
                        ncol = 6L,
-                       dataSlot,
                        zrange,
                        main = "",
                        do.names = TRUE,
-                       do.legend = FALSE,
-                       legend.mapping = round(seq(from=zrange[1], to=zrange[2]), 2),
-                       nx = 24L,
-                       ny = 16L,
+                       do.legend = TRUE,
+                       nx = 24,
+                       ny = 16,
                        fill = c("blue", "white", "red"), 
                        abris = "#333333",
-                       na.fill = "grey") { 
+                       na.fill = "grey",
+                       do.grid.newpage = TRUE) { 
     if (missing(z))
       stop("'z' must not be missing.")
     if (!is.list(z))
@@ -34,9 +33,6 @@ plotScreen <- function(z,
     if(!(is.logical(do.legend) && (length(do.legend)==1L) && !is.na(do.legend)))
       stop("'do.legend' must be logical of length 1.")
     
-    if(!missing(dataSlot))
-      z = lapply(z, "[[", dataSlot)
-
     for(i in seq(along=z))
       z[[i]][!is.finite(z[[i]])] = NA
 
@@ -46,87 +42,103 @@ plotScreen <- function(z,
         stop("'zrange' must be of length 2 with finite values.")
       z = lapply(z, function(v) { v[v<zrange[1]]=zrange[1]; v[v>zrange[2]]=zrange[2]; return(v) })
     } else {
-      zrange = range(unlist(z), na.rm=TRUE)
+      values = unlist(z)
+      med = median(values, na.rm=TRUE)
+      zrange = med+c(-1,1) * max( max(values, na.rm=TRUE)-med,
+                                  med-min(values, na.rm=TRUE) )
     }
     
-    nrow <- ceiling(length(z) / ncol)
-    colRamp <- colorRamp(fill)
+    colRamp = colorRamp(fill)
 
     if(is.null(names(z)))
       names(z) = paste(seq(along=z))
 
-    dx <- if (do.legend) 0.9/ncol else 1.0/ncol
-    dy <- 1.0 / nrow
+    nrow = ceiling(length(z) / ncol)
+    px = rep(seq_len(nx), ny)
+    py = rep(seq_len(ny), each=nx)
     
-    w <- 1.0 / nx
-    h <- 1.0 / ny
-    x <- (1:nx) / nx - w/2
-    x <- rep(x, ny)
-    y <- (1:ny) / ny - h / 2
-    y <- rep(y, each=nx)
-    grid.newpage()
-    
-    pushViewport(viewport(width=1, height=0.92))
-    if(main!=""){
-      grid.text(main, x=0.5, y=1, hjust=0.5, vjust=pi/2)
-      pushViewport(viewport(x=0.5, width=1,
-                            y=unit(0.5, "npc")-unit(1, "char"),
-                            height=unit(1, "npc")-unit(2, "char")))
+    if(do.grid.newpage)
+      grid.newpage()
+
+    mainViewportHeight = unit(1, "npc")
+    mainViewportWidth  = unit(1, "npc")
+
+    if (main!="") {
+      mainViewportHeight = mainViewportHeight - unit(2, "strheight", data="!") 
+      grid.text(main, x=0.5, y=1, hjust=0.5, vjust=1.5)
     }
+
+    if(do.legend) {
+      ys = pretty(zrange, 10)
+      ys = ys[-c(1,length(ys))]
+      barWidth  = 8
+      textWidth = max(nchar(paste(ys)))+2
+      unitWidth = unit(barWidth+textWidth, "strwidth", data="x")
+      mainViewportWidth  = mainViewportWidth - unitWidth
+      
+      steps = (seq(ys[1], ys[length(ys)], length=50) - zrange[1]) / diff(zrange)
+      mcol = colRamp(steps) / 256
+      col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
+      
+      pushViewport(viewport(
+          x = unit(1, "npc"),
+          width = unitWidth,
+          y = unit(0.5, "npc"),
+          height = unit(0.7, "npc"),
+          just = c("right", "center"),                      
+          xscale = c(0, barWidth+textWidth),                      
+          yscale = ys[c(1, length(ys))] ))
+
+      grid.raster(matrix(col, ncol=1, nrow=length(col)),
+                  interpolate = FALSE,
+                  x = 2, width = barWidth-2, 
+                  y = zrange[1], height=diff(zrange),
+                  default.units="native", just=c("left", "bottom"))
+                 
+      grid.text(label = paste(ys),
+                x = barWidth,
+                y = ys,
+                default.units="native", just=c("left", "bottom"),
+                gp = gpar(cex=1, fill="black"))
+      
+      popViewport()
+    }
+ 
+    pushViewport(viewport(
+      x      = 0,
+      width  = mainViewportWidth,
+      y      = 0,
+      height = mainViewportHeight,
+      just   = c("left", "bottom"),
+      xscale = c(0, ncol),
+      yscale = c(0, nrow)))
+                 
+    plateHeight = unit(0.95, "native")
+    if (do.names)
+      plateHeight = plateHeight - unit(2, "strheight", data="!")
     
-    for (i in 1:ncol) {
-      for (j in 1:nrow) {
+    for (i in seq_len(ncol)) {
+      for (j in seq_len(nrow)) {
         index = (j-1)*ncol + i
         if (index <= length(z)) {
           zval = (z[[index]] - zrange[1]) / diff(zrange)
+          zval = ifelse(zval<0, 0, ifelse(zval>1, 1, zval)) ## robustness against rounding errors
           mcol = colRamp(zval) / 256
           mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
           col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
           col[is.na(zval)] = na.fill
-          
+    
+          grid.raster(matrix(col, nrow=nx, ncol=ny, byrow=TRUE),
+                      x=i, y=nrow-j+1, width=0.95, height=plateHeight,
+                      interpolate=FALSE, default.units="native",
+                      just=c("right", "top"))
+
           if (do.names)
-            pushViewport(viewport(x = (i-0.5)*dx , y = 1-(j-0.6)*dy, width = 0.95 * dx, height = 0.8 * dy))
-          else
-            pushViewport(viewport(x = (i-0.5)*dx , y = 1-(j-0.5)*dy, width = 0.95 * dx, height = 0.95 * dy))
-
-          grid.rect(x, 1 - y, w, h, gp = gpar(col = col, fill = col))
-          grid.rect(0.5, 0.5, 1, 1, gp = gpar(col = abris, fill = "transparent"))
-          popViewport()
-
-          if (do.names) {
-            pushViewport(viewport(x = (i - 0.5) * dx, y = 1 - (j - 0.1) * dy, width = 0.95 * dx, height = 0.2 * dy))
-            grid.text(names(z)[[index]], gp = gpar(cex = 1))
-            popViewport()
-          }
-        }
-      }
-    }
-
-    if(do.legend) {
-      pushViewport(viewport(x=0.95, y=0.5, width=0.09, height=1))
-      zval = (0:50)/50
-      mcol = colRamp(zval) / 256
-      mcol[is.na(zval), ] = 0 ## 'rgb' does not like NA
-      col = do.call(rgb, lapply(1:3, function(j) mcol[,j]))
-      col[is.na(zval)] = na.fill
-      # plot legend box
-      grid.rect(0.2, zval/1.5+0.2, 0.3, 0.02/1.5, gp=gpar(col=col, fill=col))
-      # print legend text: find labels
-      ys = pretty(zval*diff(zrange)+min(zrange),8)
-      ys = ys[ys>=zrange[1] & ys<=zrange[2]]
-      zval = (ys-min(zrange))/diff(zrange)
-      grid.rect(0.37, 0.5/1.5+0.2, 1e-3, 1/1.5, gp=gpar(fill="black"))
-      grid.rect(0.39, zval/1.5+0.2, 0.03, 1e-3, gp=gpar(fill="black"))
-      grid.text(legend.mapping, 0.44,
-                zval/1.5+0.2, gp = gpar(cex=1, fill="black"),
-                just="left")
-      popViewport()
-    }
-    
-    if(main!=""){
-      popViewport()
-    }
+            grid.text(names(z)[[index]],
+                      x = unit(i-0.5, "native"), y = unit(nrow-j, "native") + unit(1, "strheight", data="!"),
+                      just=c("center", "bottom"))
+        } ## if
+      } ## for j
+    } # for i
     popViewport()
-    
-    invisible(NULL)
 }
