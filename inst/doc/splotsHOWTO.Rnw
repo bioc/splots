@@ -65,4 +65,19 @@ plotScreen(screen, ncol=4, do.names=FALSE, main="Example data")
 \end{center}
 \end{figure}
 
+%---------------------------------------------------------
+% SessionInfo
+%---------------------------------------------------------
+\begin{table*}[tbp]
+\begin{minipage}{\textwidth}
+<<sessionInfo, results=tex, print=TRUE>>=
+toLatex(sessionInfo())
+@ 
+\end{minipage}
+\caption{\label{tab:sessioninfo}%
+The output of \Rfunction{sessionInfo} on the build system 
+after running this vignette.}
+\end{table*}
+
+
 \end{document}
