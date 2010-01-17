@@ -93,7 +93,8 @@ plotScreen = function(z,
     if(do.legend) {
       
       if(is.numeric(zrange)){
-        yPos  = pretty(zrange, 10)[2:8]
+        yPos  = pretty(zrange, 10)
+        yPos  = yPos[-c(1L, length(yPos))]
         yText = paste(yPos)
         
         steps = (seq(yPos[1], yPos[length(yPos)], length=50) - zrange[1]) / diff(zrange)
