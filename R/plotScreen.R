@@ -145,7 +145,7 @@ plotScreen = function(z,
       height = mainViewportHeight,
       just   = c("left", "bottom"),
       xscale = c(0, ncol),
-      yscale = c(0, nrow)))
+      yscale = c(0, nrow+1)))
                  
     plateHeight = unit(0.95, "native")
     if (do.names)
@@ -166,9 +166,9 @@ plotScreen = function(z,
             col = fill[as.integer(z[[index]])]
           }
           grid.raster(matrix(col, nrow=ny, ncol=nx, byrow=TRUE),
-                      x=i, y=nrow-j+1, width=0.95, height=plateHeight,
+                      x=i-0.5, y=nrow-j+1, width=0.95, height=plateHeight,
                       interpolate=FALSE, default.units="native",
-                      just=c("right", "top"))
+                      just=c("center", "top"))
 
           if (do.names)
             grid.text(names(z)[[index]],
