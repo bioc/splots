@@ -145,7 +145,7 @@ plotScreen = function(z,
       height = mainViewportHeight,
       just   = c("left", "bottom"),
       xscale = c(0, ncol),
-      yscale = c(0, nrow+1)))
+      yscale = c(0, nrow)))
                  
     plateHeight = unit(0.95, "native")
     if (do.names)
