@@ -18,6 +18,7 @@ plotScreen(z,
            main = "",
            do.names = TRUE,
            do.legend = TRUE,
+           legend.label,
            nx = 24,
            ny = 16,
            fill, 
@@ -57,6 +58,8 @@ plotScreen(z,
   \item{do.names}{Logical specifiying if plate captions should be plotted.}
   \item{do.legend}{Logical specifying if a legend for false color
     values should be output.}
+  \item{legend.label}{Character or plotmath expression that is printed
+    next to the legend (see vignette for examples).}
   \item{nx}{An integer for the number of columns in a plate. Default 24 for a 384-well plate.}
   \item{ny}{An integer for the number of rows in a plate. Default 16 for a 384-well plate.}
   \item{na.fill}{Color for NA values.}

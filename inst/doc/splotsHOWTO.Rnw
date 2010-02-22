@@ -50,7 +50,9 @@ plotScreen(screen, ncol=2, do.legend=FALSE)
 \begin{figure}[ht]
 \begin{center}
 <<fig=TRUE, width=6, height=8>>=
-plotScreen(screen, ncol=4, fill=c("white", "darkblue"), main="Example data")
+plotScreen(screen, ncol=4, fill=c("white", "darkblue"), 
+           main="Example data", 
+           legend.label=expression(bar(x) == sum(x[i], i==1, n)))
 @ 
 \end{center}
 \end{figure}
@@ -60,7 +62,8 @@ plotScreen(screen, ncol=4, fill=c("white", "darkblue"), main="Example data")
 <<fig=TRUE, width=6, height=8>>=
 for(i in seq(along=screen))
   screen[[i]][sample(384, 5)] = NA
-plotScreen(screen, ncol=4, do.names=FALSE, main="Example data")
+plotScreen(screen, ncol=4, do.names=FALSE, 
+           main="Example data", legend.label="Legend label")
 @ 
 \end{center}
 \end{figure}
