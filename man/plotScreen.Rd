@@ -18,7 +18,7 @@ plotScreen(z,
            main = "",
            do.names = TRUE,
            do.legend = TRUE,
-           legend.label,
+           legend.label = deparse(substitute(z)),
            nx = 24,
            ny = 16,
            fill, 
@@ -54,12 +54,16 @@ plotScreen(z,
     used to define the corresponding color names; by default, a
     palette from \code{RColorBrewer} is used.
   }
-  \item{main}{Character of length 1, the plot title.}
+  \item{main}{Character of length 1 or plotmath expression used for the plot title. To omit, set
+    this argument to length 0, to the empty character \code{""}, to \code{FALSE}
+    or to \code{NULL}.}
   \item{do.names}{Logical specifiying if plate captions should be plotted.}
   \item{do.legend}{Logical specifying if a legend for false color
     values should be output.}
-  \item{legend.label}{Character or plotmath expression that is printed
-    next to the legend (see vignette for examples).}
+  \item{legend.label}{Character of length 1 or plotmath expression that is printed
+    next to the legend (see vignette for examples). To omit, set
+    this argument to length 0, to the empty character \code{""}, to \code{FALSE}
+    or to \code{NULL}.}
   \item{nx}{An integer for the number of columns in a plate. Default 24 for a 384-well plate.}
   \item{ny}{An integer for the number of rows in a plate. Default 16 for a 384-well plate.}
   \item{na.fill}{Color for NA values.}
@@ -67,14 +71,9 @@ plotScreen(z,
   \code{grid.newpage} is called at the begin of this function.}
 }
 
-\references{
-    The idea for this function is from Ligia Bras.
-}
 \value{None. The function is called for its side effect.}
 
-\author{
-    Wolfgang Huber and Oleg Sklyar
-}
+\author{Wolfgang Huber, based on an earlier version by Oleg Sklyar.}
 
 \examples{
   screen = lapply(1:12, function(i) cumsum(rnorm(384)))

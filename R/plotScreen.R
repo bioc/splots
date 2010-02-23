@@ -1,19 +1,21 @@
 plotScreen = function(z,
-                       ncol = 6L,
-                       zrange,
-                       main = "",
-                       do.names = TRUE,
-                       do.legend = TRUE,
-                       legend.label,
-                       nx = 24,
-                       ny = 16,
-                       fill,
-                       na.fill = "grey",
-                       do.grid.newpage = TRUE) {
+                      ncol = 6L,
+                      zrange,
+                      main = "",
+                      do.names = TRUE,
+                      do.legend = TRUE,
+                      legend.label = deparse(substitute(z)),
+                      nx = 24,
+                      ny = 16,
+                      fill,
+                      na.fill = "grey",
+                      do.grid.newpage = TRUE) {
 
   ##--------------------------------------------------
   ## Check arguments
   ##--------------------------------------------------
+
+  ## z:
   if (missing(z))
     stop("'z' must not be missing.")
   if (!is.list(z))
@@ -21,23 +23,47 @@ plotScreen = function(z,
   if (length(z) < 1L)
     stop("'z' must have length >= 1.")
     
+  ## ncol:
   if (!((length(ncol)==1L)&&(ncol>0L)&&!is.na(ncol)))
     stop("'ncol' must be a positive integer of length 1.")
-  if (!((length(nx)  ==1L)&&(  nx>0L)&&!is.na(nx)))
+
+  ## nx, ny
+  if (!((length(nx)==1L)&&(nx>0L)&&!is.na(nx)))
     stop("'nx' must be a positive integer of length 1.")
-  if (!((length(ny)  ==1L)&&(  ny>0L)&&!is.na(ny)))
+  if (!((length(ny)==1L)&&(ny>0L)&&!is.na(ny)))
     stop("'ny' must be a positive integer of length 1.")
 
+  ## do.names, do.legend
   if(!(is.logical(do.names) && (length(do.names)==1L) && !is.na(do.names)))
     stop("'do.names' must be logical of length 1.")
   if(!(is.logical(do.legend) && (length(do.legend)==1L) && !is.na(do.legend)))
     stop("'do.legend' must be logical of length 1.")
 
-  ##--------------------------------------------------------------------------
-  ## Figure out the type of the elements of z: should all be the same, factor
+  ## legend.label
+  if(do.legend){
+    if(length(legend.label)>1L)
+      stop("'legend.label' must have length <=1.")
+    have.legend.label = !( is.null(legend.label) || (length(legend.label)==0) ||
+                           identical(legend.label, "") || identical(legend.label, FALSE) )
+    if(have.legend.label)
+      if(!(is.character(legend.label) || is.expression(legend.label)))
+        stop("'legend.label' must be a character or expression.")
+  }
+
+  ## main
+  if(length(main)>1L)
+    stop("'main' must have length <=1.")
+  have.main = !( is.null(main) || (length(main)==0) ||
+                 identical(main, "") || identical(main, FALSE) )
+  if(have.main)
+    if(!(is.character(main) || is.expression(main)))
+      stop("'main' must be a character or expression.")
+  
+  ##------------------------------------------------------------------------------
+  ## Figure out the type of the elements of z: They should all be the same, factor
   ## or numeric. The following block of code defines (if missing) zrange, fill
   ## and 'cleans up' z.
-  ##--------------------------------------------------------------------------
+  ##-------------------------------------------------------------------------------
   if(is.numeric(z[[1]])) {
     ## --- z is numeric ---
     wh = which(!sapply(z, is.numeric))
@@ -93,7 +119,7 @@ plotScreen = function(z,
   mainViewportHeight = unit(1, "npc")
   mainViewportWidth  = unit(1, "npc")
 
-  if (main!="") {
+  if (have.main) {
     mainViewportHeight = mainViewportHeight - unit(2, "strheight", data="!") 
     grid.text(main, x=0.5, y=1, hjust=0.5, vjust=1.5)
   }
@@ -121,7 +147,7 @@ plotScreen = function(z,
     dyPos = yPos[2]-yPos[1]
 
     widths = c(space = 1, bar = 2, tick = max(nchar(yText))+1, label = 4)
-    unitWidth = unit(sum(widths), "strwidth", data="x")
+    unitWidth = unit(sum(widths[1 : if(have.legend.label) 4 else 3 ]), "strwidth", data="x")
     mainViewportWidth  = mainViewportWidth - unitWidth
     
     pushViewport(
@@ -148,7 +174,7 @@ plotScreen = function(z,
               default.units = "native", just=c("left", "center"),
               gp = gpar(cex=1, fill="black"))
 
-    if(!missing(legend.label))
+    if(have.legend.label)
       grid.text(label = legend.label,
               x = unit(1, "npc") - unit(0.5, "strwidth", data="x"),
               y = unit(0.5, "npc"),
