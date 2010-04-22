@@ -1,5 +1,5 @@
 Package: splots
-Version: 1.13.13
+Version: 1.14.0
 Title: Visualization of high-throughput assays in microtitre plate or slide format
 Author: Wolfgang Huber, Oleg Sklyar
 Maintainer: Wolfgang Huber <whuber@embl.de>
