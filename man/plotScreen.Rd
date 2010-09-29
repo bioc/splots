@@ -1,8 +1,6 @@
 \name{plotScreen}
 \alias{plotScreen}
 
-\docType{function}
-
 \title{Plot a false-color representation of screening data}
 
 \description{
