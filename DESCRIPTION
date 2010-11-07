@@ -7,3 +7,4 @@ Imports: grid, RColorBrewer
 Description: The splots package provides the plotScreen function for visualising data in microtitre plate or slide format. 
 License: LGPL
 LazyLoad: yes
+biocViews: Visualization, HighThroughputSequencing
