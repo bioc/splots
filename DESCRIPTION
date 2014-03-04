@@ -1,10 +1,12 @@
 Package: splots
-Version: 1.29.1
-Title: Visualization of high-throughput assays in microtitre plate or slide format
+Version: 1.29.2
+Title: Visualization of high-throughput assays in microtitre plate or
+        slide format
 Author: Wolfgang Huber, Oleg Sklyar
 Maintainer: Wolfgang Huber <whuber@embl.de>
 Imports: grid, RColorBrewer
-Description: The splots package provides the plotScreen function for visualising data in microtitre plate or slide format. 
+Description: The splots package provides the plotScreen function for
+        visualising data in microtitre plate or slide format.
 License: LGPL
 LazyLoad: yes
-biocViews: Visualization, HighThroughputSequencing, MicrotitrePlateAssay
+biocViews: Visualization, Sequencing, MicrotitrePlateAssay
