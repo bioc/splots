@@ -21,9 +21,16 @@
 
 \maketitle
 
-The \Rpackage{splots} package provides a single function, \Rfunction{plotScreen},
-for visualising data in microtitre plate or slide format. Here we show a short demo 
-of its parameters. First, we generate example data:
+This package is provided to support legacy code and reverse 
+dependencies, but it should not be used as a dependency for new code development. 
+It provides a single function, \Rfunction{plotScreen}, for visualising data in microtitre 
+plate or slide format. As a better alternative for such functionality, please 
+consider the platetools package on CRAN 
+(https://cran.r-project.org/package=platetools and 
+https://github.com/Swarchal/platetools), or generic ggplot2 graphics 
+functionality. 
+  
+Here we show a short demo of its parameters. First, we generate example data:
 %
 <<exampledata, results=hide>>= 
 library("splots")

@@ -1,6 +1,6 @@
-
 import("grid", "RColorBrewer")
 
-export(plotScreen)
-exportClasses()
-exportMethods()
+importFrom("grDevices", "colorRamp", "rgb")
+importFrom("stats", "median")
+
+export("plotScreen")
