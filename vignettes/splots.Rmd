@@ -42,9 +42,9 @@ xl = lapply(plateNames, function(pl) {
   rv = rep(NA_real_, nx * ny)
   r = match(featuresPerWell[[1]]$row[sel], LETTERS)
   c = match(featuresPerWell[[1]]$col[sel], paste(seq_len(nx)))
-  assertthat::assert_that(!any(is.na(r)), !any(is.na(c)),
-                          all(r>=1), all(r<=ny), all(c>=1), all(c<=nx))
   i = (r-1) * nx + c
+  assertthat::assert_that(!any(is.na(r)), !any(is.na(c)), !any(duplicated(i)),
+                          all(r>=1), all(r<=ny), all(c>=1), all(c<=nx))
   rv[i] = featuresPerWell[[2]][sel, "count"]
   rv
 })
@@ -59,7 +59,8 @@ length(xl)
 names(xl)[1:4]
 unique(vapply(xl, function(x) paste(class(x), length(x)), character(1)))
 xl[[1]][1:30]
-splots::plotScreen(xl, ncol = 4, fill = c("white", "darkgoldenrod4"), 
+splots::plotScreen(xl, nx = nx, ny = ny, ncol = 4, 
+           fill = c("white", "darkgoldenrod4"), 
            main = "HD2013SGI", legend.label = "cell count",
            zrange = c(0, max(unlist(xl), na.rm = TRUE)))
 ```
