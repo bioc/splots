@@ -13,38 +13,55 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.dim=c(6, 8))
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, autodep = TRUE)
+set.seed(0xdada)
 ```
 
 This package is provided to support legacy code and reverse dependencies, but it should not be used as a dependency for new code development. It provides a single function, `plotScreen`, for visualising data in microtitre plate or slide format. As a better alternative for such functionality, please consider the `r CRANpkg("platetools")` package (see also https://github.com/Swarchal/platetools), or generic `r CRANpkg("ggplot2")` graphics functionality. 
   
-Here we show a short demo of its parameters. First, we generate example data:
+Here we give a short demo. First, we load and explore some example data.
 
-```{r exampledata} 
-library("splots")
-screen = lapply(1:12, function(i) cumsum(rnorm(384)))
-names(screen) = paste("plate", LETTERS[seq(along=screen)])
+```{r exampledata, message=FALSE, warning=FALSE} 
+data("featuresPerWell", package = "HD2013SGI")
+str(featuresPerWell[[1]])
+str(featuresPerWell[[2]])
+stopifnot(nrow(featuresPerWell[[1]]) == nrow(featuresPerWell[[2]]))
 ```
 
-```{r fig1}
-plotScreen(screen, ncol=3)
+We use a subset of these data and assemble them into the list `xl`. The details of how this is done in the following code chunk are arcane and are likely not to matter much to you; what is important is that you bring your data into the same format.
+
+```{r xl, results = "hide"}
+np = 40
+nx = 24
+ny = 16
+plateNames = unique(featuresPerWell[[1]]$plate)
+assertthat::assert_that(length(plateNames) >= np)
+plateNames = plateNames[seq_len(np)]
+xl = lapply(plateNames, function(pl) {
+  sel = with(featuresPerWell[[1]], plate == pl & field == "1")
+  rv = rep(NA_real_, nx * ny)
+  r = match(featuresPerWell[[1]]$row[sel], LETTERS)
+  c = match(featuresPerWell[[1]]$col[sel], paste(seq_len(nx)))
+  assertthat::assert_that(!any(is.na(r)), !any(is.na(c)),
+                          all(r>=1), all(r<=ny), all(c>=1), all(c<=nx))
+  i = (r-1) * nx + c
+  rv[i] = featuresPerWell[[2]][sel, "count"]
+  rv
+})
+names(xl) = plateNames
 ```
 
-```{r fig2}
-plotScreen(screen, ncol=2, do.legend=FALSE)
-```
+So this the object `xl` that is passed into `plotScreen`:
 
-```{r fig3}
-plotScreen(screen, ncol=4, fill=c("white", "darkblue"), 
-           main="Example data", 
-           legend.label=expression(bar(x) == sum(x[i], i==1, n)))
-```
-
-```{r fig4}
-for(i in seq(along=screen))
-  screen[[i]][sample(384, 5)] = NA
-plotScreen(screen, ncol=4, do.names=FALSE, 
-           main="Example data", legend.label="Legend label")
+```{r fig1, fig.wide = TRUE, fig.cap = "Output of `splots::plotScreen`.", , fig.dim=c(10, 20)}
+class(xl)
+length(xl)
+names(xl)[1:4]
+unique(vapply(xl, function(x) paste(class(x), length(x)), character(1)))
+xl[[1]][1:30]
+splots::plotScreen(xl, ncol = 4, fill = c("white", "darkgoldenrod4"), 
+           main = "HD2013SGI", legend.label = "cell count",
+           zrange = c(0, max(unlist(xl), na.rm = TRUE)))
 ```
 
 
