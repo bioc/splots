@@ -1,4 +1,4 @@
-import("grid", "RColorBrewer")
+import("grid", "RColorBrewer", "dplyr", "ggplot2")
 
 importFrom("grDevices", "colorRamp", "rgb")
 importFrom("stats", "median")

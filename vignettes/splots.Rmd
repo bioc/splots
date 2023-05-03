@@ -17,20 +17,56 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, autodep = TRUE)
 set.seed(0xdada)
 ```
 
-This package is provided to support legacy code and reverse dependencies, but it should not be used as a dependency for new code development. It provides a single function, `plotScreen`, for visualising data in microtitre plate or slide format. As a better alternative for such functionality, please consider the `r CRANpkg("platetools")` package (see also https://github.com/Swarchal/platetools), or generic `r CRANpkg("ggplot2")` graphics functionality. 
+The `splots` package was written in 2006, and it is still here to support legacy code and to not disrupt other packages that depend on it. It should not be used for new code development. The package provides a single function, `plotScreen`, for visualising data in microtitre plate or slide format. Please consider using the `r CRANpkg("platetools")` package (see also https://github.com/Swarchal/platetools), or simply `r CRANpkg("ggplot2")`, as exemplified below.
   
-Here we give a short demo. First, we load and explore some example data.
+# Example data
 
-```{r exampledata, message=FALSE, warning=FALSE} 
+```{r exampledata1, message=FALSE, warning=FALSE} 
 data("featuresPerWell", package = "HD2013SGI")
+```
+
+This dataset contains measurements of a combinatorial RNAi screen on a human cell line (HCT116) with fluorescent microscopy as a phenotypic readout, as described in the documentation of the `HD2013SGI` package.
+There are `r length(unique(featuresPerWell[[1]]$plate))` plates, each with 384 wells. Within each well, the microscope took images at `r length(unique(featuresPerWell[[1]]$field))` locations, called `field`. Plate, row, column and field ID are given in the following dataframe.
+
+```{r exampledata2} 
 str(featuresPerWell[[1]])
+```
+
+The actual measurements are in the following matrix, whose rows are aligned with the above dataframe. Its `r ncol(featuresPerWell[[2]])` columns are different morphometric measurements, averaged across the cells in that image.
+
+```{r exampledata3} 
 str(featuresPerWell[[2]])
+```
+```{r exampledata4, echo = FALSE} 
 stopifnot(nrow(featuresPerWell[[1]]) == nrow(featuresPerWell[[2]]))
 ```
 
-We use a subset of these data and assemble them into the list `xl`. The details of how this is done in the following code chunk are arcane and are likely not to matter much to you; what is important is that you bring your data into the same format.
+For the purpose of this demo, we only use the first 40 plates and the `count` measurement in field 1, i.e., the number of cells in that field---a proxy for the cells' viability. We also convert the `row` and `col` variables into integers.
 
-```{r xl, results = "hide"}
+```{r exampledata5, message=FALSE, warning=FALSE}
+library("dplyr")
+sgi = tibble(featuresPerWell[[1]], count = featuresPerWell[[2]][, "count"]) |>
+  filter(plate %in% unique(plate)[1:40],
+         field == "1") |>
+  mutate (col = as.integer(col),
+          row = match(row, LETTERS))
+sgi
+```
+
+# Using `ggplot2`
+
+```{r plotgg, fig.wide = TRUE, fig.cap = "Visualization using `ggplot`", fig.dim=c(10, 18), message=FALSE, warning=FALSE}
+library("ggplot2")
+ggplot(sgi, aes(x = col, y = row, fill = count)) + geom_raster() +
+  facet_wrap(vars(plate), ncol = 4) +
+  scale_fill_gradient(low = "white", high = "#00008B")
+```
+
+# Using `splots::plotScreen`
+
+The `plotScreen` takes as input the list `xl`, constructed below. As you can see, this is a lot more clumsy.
+
+```{r xl1, results = "hide"}
 np = 40
 nx = 24
 ny = 16
@@ -51,17 +87,19 @@ xl = lapply(plateNames, function(pl) {
 names(xl) = plateNames
 ```
 
-So this the object `xl` that is passed into `plotScreen`:
+So this the list `xl`:
 
-```{r fig1, fig.wide = TRUE, fig.cap = "Output of `splots::plotScreen`.", , fig.dim=c(10, 20)}
-class(xl)
+```{r xl2}
 length(xl)
 names(xl)[1:4]
 unique(vapply(xl, function(x) paste(class(x), length(x)), character(1)))
 xl[[1]][1:30]
+```
+
+```{r fig1, fig.wide = TRUE, fig.cap = "Visualization using `splots::plotScreen`", fig.dim=c(10, 18)}
 splots::plotScreen(xl, nx = nx, ny = ny, ncol = 4, 
-           fill = c("white", "darkgoldenrod4"), 
-           main = "HD2013SGI", legend.label = "cell count",
+           fill = c("white", "#00008B"), 
+           main = "HD2013SGI", legend.label = "count",
            zrange = c(0, max(unlist(xl), na.rm = TRUE)))
 ```
 
