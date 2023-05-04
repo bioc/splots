@@ -12,11 +12,6 @@ vignette: >
 
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, autodep = TRUE)
-set.seed(0xdada)
-```
-
 The `splots` package was written in 2006, and it is still here to support legacy code and to not disrupt other packages that depend on it. It should not be used for new code development. The package provides a single function, `plotScreen`, for visualising data in microtitre plate or slide format. Please consider using the `r CRANpkg("platetools")` package (see also https://github.com/Swarchal/platetools), or simply `r CRANpkg("ggplot2")`, as exemplified below.
   
 # Example data

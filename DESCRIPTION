@@ -1,10 +1,11 @@
 Package: splots
-Version: 1.67.1
+Version: 1.67.2
 Title: Visualization of high-throughput assays in microtitre plate or slide format
 Author: Wolfgang Huber, Oleg Sklyar
-Maintainer: Wolfgang Huber <wolfgang.huber@embl.de>
+Maintainer: Wolfgang Huber <wolfgang.huber@embl.org>
+Depends: R (>= 3.5.0)
 Imports: grid, RColorBrewer
-Suggests: BiocStyle, knitr, rmarkdown, assertthat, HD2013SGI, dplyr, gpplot2
+Suggests: BiocStyle, knitr, rmarkdown, assertthat, HD2013SGI, dplyr, ggplot2
 VignetteBuilder: knitr
 Description: This package is provided to support legacy code and reverse 
   dependencies, but it should not be used as a dependency for new code development. 

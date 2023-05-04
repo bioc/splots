@@ -11,6 +11,12 @@ plotScreen = function(z,
                       na.fill = "grey",
                       do.grid.newpage = TRUE) {
 
+  
+  .Deprecated(new = "ggplot, geom_raster, facet_wrap", 
+              package = NULL, 
+              msg = "The function splots::plotScreen is obsolete, please use ggplot with geom_raster and facet_wrap instead, as described in the vignette of the splots package",
+              old = as.character(sys.call(sys.parent()))[1L])
+  
   ##--------------------------------------------------
   ## Check arguments
   ##--------------------------------------------------

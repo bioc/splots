@@ -4,6 +4,9 @@
 \title{Plot a false-color representation of screening data}
 
 \description{
+  This function is obsolete, please use \code{ggplot} with \code{geom_raster} and 
+  \code{facet_wrap} instead, as described in the vignette of the \code{splots} package.
+  
   \code{plotScreen} produces a false-color representation of screening
   data from multiple plates (typical use case: dozens of plates)
   in a single plot.
