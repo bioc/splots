@@ -1,8 +1,10 @@
 Package: splots
 Version: 1.79.0
 Title: Visualization of high-throughput assays in microtitre plate or slide format
-Author: Wolfgang Huber, Oleg Sklyar
-Maintainer: Wolfgang Huber <wolfgang.huber@embl.org>
+Authors@R: c(
+    person("Wolfgang", "Huber", email = "wolfgang.huber@embl.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0474-2218")),
+    person("Oleg", "Sklyar", role = "aut")
+  )
 Imports: grid, RColorBrewer
 Suggests: BiocStyle, knitr, rmarkdown, assertthat, HD2013SGI, dplyr, ggplot2
 VignetteBuilder: knitr
