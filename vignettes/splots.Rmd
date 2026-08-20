@@ -17,7 +17,7 @@ The `splots` package was written in 2006, and it is still here to support legacy
 # Example data
 
 ```{r exampledata1, message=FALSE, warning=FALSE} 
-data("featuresPerWell", package = "HD2013SGI")
+featuresPerWell <- HD2013SGI::HD2013SGIdata("featuresPerWell")
 ```
 
 This dataset contains measurements of a combinatorial RNAi screen on a human cell line (HCT116) with fluorescent microscopy as a phenotypic readout, as described in the documentation of the `HD2013SGI` package.
