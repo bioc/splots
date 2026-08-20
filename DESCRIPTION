@@ -1,5 +1,5 @@
 Package: splots
-Version: 1.79.1
+Version: 1.79.2
 Title: Visualization of high-throughput assays in microtitre plate or slide format
 Authors@R: c(
     person("Wolfgang", "Huber", email = "wolfgang.huber@embl.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0474-2218")),
