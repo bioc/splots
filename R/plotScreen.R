@@ -108,7 +108,7 @@ plotScreen = function(z,
     }
     
     if(missing(fill))
-      fill = rep(brewer.pal(9, "Set1"), ceiling(length(zrange)/9))[seq(along=zrange)]
+      fill = rep(palette.colors(9, "Set 1"), ceiling(length(zrange)/9))[seq(along=zrange)]
       
   }
   
